@@ -3,7 +3,11 @@
  *   Released under current SciPy licence
  */ 
 
-#include <windows.h>
+#include <windows.h> /* adequate for mingw32 */
+#include <Winternl.h>
+#ifdef _MSC_VER /* if being compiled by microsoft visual C */
+
+#endif
 
 typedef long NTSTATUS;
 typedef unsigned long ULONG;
