@@ -39,8 +39,8 @@ setup(
     author="Sturla Molden",
     name="numpy-sharedmem",
     version="2009-02-12",
-    description="numpy-sharedmem  easy to use shared memory implementation for numpy to make it easy to share memory in an array across processes and threads."
-    url='https://cleemesser@bitbucket.org/cleemesser/numpy-sharedmem/'
+    description="numpy-sharedmem  easy to use shared memory implementation for numpy to make it easy to share memory in an array across processes and threads.",
+    url='https://cleemesser@bitbucket.org/cleemesser/numpy-sharedmem/',
     classifiers=[
         "Development Status :: 3 - alpha, research",
         "Intended Audience :: Scientific programmers",

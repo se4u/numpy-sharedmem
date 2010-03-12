@@ -55,6 +55,7 @@ setup(
         "License :: scipy",
         "Operating System :: unix, windows"],
     packages=["sharedmem"],
+    zip_safe=False, # because of ext module
     cmdclass = {'build_ext': build_ext},
     ext_modules = ext_modules,
 

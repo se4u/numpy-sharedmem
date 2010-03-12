@@ -29,6 +29,8 @@ It's suppose to work on unix and windows, at least in 32bit for not
 too big arrays. I've only done basic tests on winxp so far using
 ming32 (Pythonxy 2.6 distribution) numpy 1.3 and cython 12.1
 
+The tests require multiprocessing, which is available for python 2.5 and is part of the standard library in python 2.6 and above
+
 
 Installation:
 -------------
@@ -38,6 +40,20 @@ Using the command line::
   $ cd numpy-sharedmem
   $ copy setup.cfg.template to setup.cfg  # to set mingw as the compiler
   $ python setup.py install
+
+
+To do
+-----
+ - test under linux
+ - see if packaging is ok. trying out setuptools to use for development
+
+ - decide if this is the right namespace--it requires numpy so perhaps it should be added to that namespace: e.g. "import numpy.sharedmem"
+
+ - add doc on how to find allocated shared memory seg under linux and
+   makesure they aren't leaking
+   
+ - contact Sturla to see if he is working on this
+
 
 
 Related Links
