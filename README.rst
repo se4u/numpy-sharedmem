@@ -2,13 +2,25 @@
 numpy-sharedmem
 ---------------
 
-A shared memory module for numpy by Sturla Molden and perhaps by G. Varaqueux Co
-de found posted on scipy list at http://folk.uio.no/sturlamo/python/sharedmem-feb13-2009.zip
+A shared memory module for numpy by Sturla Molden and G. Varoquaux code
+de found posted on scipy list at http://folk.uio.no/sturlamo/python/sharedmem-feb13-2009.zip  See also Sturla's tutorial: 
 
 Packaging by Chris Lee-Messer
 License: scipy license (2009)
 
 url:  http://cleemesser@bitbucket.org/cleemesser/numpy-sharedmem/
+
+You might want to check Sturla's sourceforge project
+http://sharedmemoryarr.sourceforge.net/ thought it didn't have any
+content as of March 2010.
+
+Features/Documentation
+----------------------
+see test.py to see how to pickle the shared array and send it to another process
+See also http://folk.uio.no/sturlamo/python/multiprocessing-tutorial.pdf
+which shows examples of using ctypes and multiprocessing to create shared memory.
+
+
 
 Requirements:
 -------------
@@ -28,8 +40,13 @@ Using the command line::
   $ python setup.py install
 
 
+Related Links
+-------------
+The python wiki on this http://wiki.python.org/moin/ParallelProcessing
+
+
 References and issues:
----------------------
+----------------------
 The oringal comment::
     http://old.nabble.com/Re:-Multiprocessing-and-shared-memory-p25949201.html
 

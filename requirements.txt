@@ -1,2 +1,3 @@
+setuptools
 numpy
 cython  # only needed for building

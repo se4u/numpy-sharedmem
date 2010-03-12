@@ -4,9 +4,9 @@
  */ 
 
 #include <windows.h> /* adequate for mingw32 */
-#include <Winternl.h>
-#ifdef _MSC_VER /* if being compiled by microsoft visual C */
 
+#ifdef _MSC_VER /* if being compiled by microsoft visual C */
+#include <Winternl.h> /* trying to get MSC to compile this */
 #endif
 
 typedef long NTSTATUS;

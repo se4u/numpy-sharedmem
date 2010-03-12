@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # this clearly compiles with VS 2008, probably would work with mingw32 gcc4.4 too
-from distutils.core import setup
+#from distutils.core import setup
+from setuptools import setup
+
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
 import os, sys
@@ -43,6 +45,7 @@ setup(
     author="Sturla Molden",
     name="numpy-sharedmem",
     version="2009-02-12",
+    license='scipy license (http://scipy.org)', 
     description="numpy-sharedmem  easy to use shared memory implementation for numpy to make it easy to share memory in an array across processes and threads.",
     url='https://cleemesser@bitbucket.org/cleemesser/numpy-sharedmem/',
     classifiers=[
