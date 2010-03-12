@@ -24,6 +24,7 @@ if sys.platform == 'linux2':
                            include_dirs=inc_dirs,
                            library_dirs=lib_dirs,
                            libraries=libs)
+    ext_modules = [unixshared]
 
 elif sys.platform == 'win32':
     numpy_include = os.path.join(numpy_basedir, r"core\include")

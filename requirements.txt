@@ -1,3 +1,4 @@
 setuptools
 numpy
-cython  # only needed for building
+# only needed for building
+cython  
