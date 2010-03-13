@@ -2,8 +2,7 @@
 numpy-sharedmem
 ---------------
 
-A shared memory module for numpy by Sturla Molden and G. Varoquaux code
-de found posted on scipy list at http://folk.uio.no/sturlamo/python/sharedmem-feb13-2009.zip  See also Sturla's tutorial: 
+A shared memory module for numpy by Sturla Molden and G. Varoquaux, adapted from Robert Kern. Code found posted on scipy list at http://folk.uio.no/sturlamo/python/sharedmem-feb13-2009.zip  See also Sturla's tutorial: 
 
 Packaging by Chris Lee-Messer
 License: scipy license (2009)
@@ -20,6 +19,7 @@ see test.py to see how to pickle the shared array and send it to another process
 See also http://folk.uio.no/sturlamo/python/multiprocessing-tutorial.pdf
 which shows examples of using ctypes and multiprocessing to create shared memory.
 
+I also have a copy of a C-types based code from Nadav Horesh adapted from other code in docs to look at.
 
 
 Requirements:
@@ -41,12 +41,18 @@ Using the command line::
   $ copy setup.cfg.template to setup.cfg  # to set mingw as the compiler
   $ python setup.py install
 
+I have also started putting binary distributions in the dist/ directory in case I don't have a compiler handy.
 
 To do
 -----
  - test under linux
- - see if packaging is ok. trying out setuptools to use for development
+   [x] basic smoke tests done on 32bit linux (ubuntu 8.04)
 
+ - test larger files: Nadav Horesh mentions that it doesn't work on
+   "large" memory regions (but still under 1GB)
+
+ - see if packaging is ok. trying out setuptools to use for development
+ 
  - decide if this is the right namespace--it requires numpy so perhaps it should be added to that namespace: e.g. "import numpy.sharedmem"
 
  - add doc on how to find allocated shared memory seg under linux and
