@@ -1,0 +1,31 @@
+changeset:   10:83cb6348c7bd
+tag:         tip
+user:        Chris Lee-Messer
+date:        Mon Mar 15 12:15:05 2010 -0700
+summary:     add some more work for Mac build
+
+bash-3.2$ sudo python setupegg.py develop
+sys.platform: darwin
+running develop
+running egg_info
+creating numpy_sharedmem.egg-info
+writing numpy_sharedmem.egg-info/PKG-INFO
+writing top-level names to numpy_sharedmem.egg-info/top_level.txt
+writing dependency_links to numpy_sharedmem.egg-info/dependency_links.txt
+writing manifest file 'numpy_sharedmem.egg-info/SOURCES.txt'
+reading manifest file 'numpy_sharedmem.egg-info/SOURCES.txt'
+writing manifest file 'numpy_sharedmem.egg-info/SOURCES.txt'
+running build_ext
+building 'sharedmem.sharedmemory_sysv' extension
+creating build
+creating build/temp.macosx-10.5-i386-2.6
+creating build/temp.macosx-10.5-i386-2.6/sharedmem
+gcc -fno-strict-aliasing -fno-common -dynamic -DNDEBUG -g -O3 -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk -I/Library/Frameworks/Python.framework/Versions/6.0.1/include -I/Library/Frameworks/Python.framework/Versions/6.0.1/lib/python2.6/site-packages/numpy/core/include -I/Library/Frameworks/Python.framework/Versions/6.0.1/include/python2.6 -c sharedmem/sharedmemory_sysv.c -o build/temp.macosx-10.5-i386-2.6/sharedmem/sharedmemory_sysv.o
+gcc -g -L/usr/local/lib -L/Library/Frameworks/Python.framework/Versions/6.0.1/lib -bundle -undefined dynamic_lookup -arch i386 build/temp.macosx-10.5-i386-2.6/sharedmem/sharedmemory_sysv.o -L/usr/local/lib -L. -lm -o /Users/clee/code/numpy-sharedmem/sharedmem/sharedmemory_sysv.so
+Creating /Library/Frameworks/Python.framework/Versions/6.0.1/lib/python2.6/site-packages/numpy-sharedmem.egg-link (link to .)
+Adding numpy-sharedmem 2009-02-12 to easy-install.pth file
+No files installed.
+
+Installed /Users/clee/code/numpy-sharedmem
+Processing dependencies for numpy-sharedmem==2009-02-12
+Finished processing dependencies for numpy-sharedmem==2009-02-12
