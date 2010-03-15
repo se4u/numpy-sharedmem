@@ -15,3 +15,118 @@ def test_shared_ones():
         a = sharedmem.ones(shape,dtype=typestr)
         t = (a == np.ones(shape))
         assert t.all()
+
+
+def test_shared_zeros():
+    """test sharedmem.zeros for small single axis types"""
+    for typestr in numtypes:
+        shape = (10,)
+        a = sharedmem.zeros(shape,dtype=typestr)
+        t = (a == np.zeros(shape))
+        assert t.all()
+
+def test_KiB_shared_zeros():
+    """test sharedmem.zeros for arrays on the order of 2**16, single axis types"""
+    for typestr in numtypes:
+        shape = (2**16,)
+        a = sharedmem.zeros(shape,dtype=typestr)
+        t = (a == np.zeros(shape))
+        assert t.all()
+
+def test_MiB_shared_zeros():
+    """test sharedmem.zeros for arrays on the order 2**21 bytyes, single axis uint8"""
+    
+    shape = (2**21,)
+    a = sharedmem.zeros(shape,dtype='uint8')
+    t = (a == np.zeros(shape))
+    assert t.all()
+
+
+        
+import multiprocessing, os, pickle
+
+def test_two_subprocesses_no_pickle():
+    #setup
+    shape = (4,)
+    a = sharedmem.zeros(shape, dtype='float64')
+    a = sharedmem.zeros(shape)
+    print os.getpid(),":", a
+
+
+    lck = multiprocessing.Lock()
+
+    def modify_array(a,lck):
+        # a = pickle.loads(a)
+        lck.acquire()
+        a[0] = 1
+        a[1] = 2
+        a[2] = 3
+        lck.release()
+        print os.getpid(), "modified array"
+        
+    p = multiprocessing.Process(target=modify_array, args=(a,lck))
+    p.start()
+
+    nn = 0
+    while True:
+        if a[0]:
+            lck.acquire()
+            t = (a == np.array([1,2,3,0], dtype='float64'))
+            lck.release()
+            break
+        if nn > 10000: # use timeout instead
+            break
+        nn += 1
+        
+    print os.getpid(), t
+    assert t.all()
+    print "finished (from %s)" % os.getpid()
+    
+    p.join()
+    
+    print a
+
+    return
+
+
+def test_two_subprocesses_with_pickle():
+    #setup
+    shape = (4,)
+    a = sharedmem.zeros(shape, dtype='float64')
+    a = sharedmem.zeros(shape)
+    print os.getpid(),":", a
+    pa = pickle.dumps(a)
+
+    lck = multiprocessing.Lock()
+
+    def modify_array(pa,lck):
+        a = pickle.loads(pa)
+        lck.acquire()
+        a[0] = 1
+        a[1] = 2
+        a[2] = 3
+        lck.release()
+        print os.getpid(), "modified array"
+        
+    p = multiprocessing.Process(target=modify_array, args=(pa,lck))
+    p.start()
+    nn = 0
+    while True:
+        if a[0]:
+            lck.acquire()
+            t = (a == np.array([1,2,3,0], dtype='float64'))
+            lck.release()
+            break
+        if nn > 10000: # use timeout instead
+            break
+     
+        nn += 1
+    print os.getpid(), t
+    assert t.all()
+    print "finished (from %s)" % os.getpid()
+    
+    p.join()
+    
+    print a
+
+
