@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
-#from distutils.core import setup
-from setuptools import setup
+# Can use this file via setup.py build_ext --inplace
+# during development
+#from setuptools import setup  # problems with cython, see setupegg.py
 
+from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
 import os, sys
@@ -30,8 +32,7 @@ if sys.platform == 'win32':
 
     ext_modules = [winshared]
 
-else:
-#if sys.platform == 'linux2':
+else: #if sys.platform == 'linux2' # or 'darwin'
     numpy_include = os.path.join(numpy_basedir, r"core/include")
     inc_dirs = [numpy_include]
     lib_dirs = [r'/usr/local/lib', r'.']
@@ -58,7 +59,7 @@ setup(
         "License :: scipy",
         "Operating System :: unix, windows"],
     packages=["sharedmem"],
-    zip_safe=False, # because of ext module
+#    zip_safe=False, # because of ext module
     cmdclass = {'build_ext': build_ext},
     ext_modules = ext_modules,
 

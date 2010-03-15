@@ -52,11 +52,12 @@ To do
    "large" memory regions (but still under 1GB)
 
  - see if packaging is ok. trying out setuptools to use for development
+   -> problem: cython build_ext doesn't seem to work with setuptools
  
  - decide if this is the right namespace--it requires numpy so perhaps it should be added to that namespace: e.g. "import numpy.sharedmem"
 
  - add doc on how to find allocated shared memory seg under linux and
-   makesure they aren't leaking
+   makesure they aren't leaking. e.g. ipcrm 
    
  - contact Sturla to see if he is working on this
 
@@ -72,7 +73,7 @@ References and issues:
 The oringal comment::
     http://old.nabble.com/Re:-Multiprocessing-and-shared-memory-p25949201.html
 
-    Gaël Varoquaux and I did some work on that some months ago. It's not as 
+    Gaï¿½l Varoquaux and I did some work on that some months ago. It's not as 
     trivial as it seems, but we have a working solution. 
 
     http://folk.uio.no/sturlamo/python/sharedmem-feb13-2009.zip
