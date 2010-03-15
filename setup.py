@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-# this clearly compiles with VS 2008, probably would work with mingw32 gcc4.4 too
-#from distutils.core import setup
-from setuptools import setup
 
+# Can use this file via devsetup.py build_ext --inplace
+# during development
+#from setuptools import setup  # problems with cython, see setupegg.py
+from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
 import os, sys

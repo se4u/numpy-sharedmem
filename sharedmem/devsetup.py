@@ -7,33 +7,41 @@ import os, sys
 
 ## configuration
 print "sys.platform:", sys.platform
+import numpy
+numpy_basedir = os.path.dirname(numpy.__file__)
+print "numpy_basedir:", numpy_basedir
 if sys.platform == 'linux2':
-    # on ubuntu 8.04
-    # inc_dirs = [r"/usr/lib/python2.5/site-packages/numpy/core/include",
-    # on ubuntu 9.04
-    inc_dirs = [r"/usr/lib/python2.6/dist-packages/numpy/core/include",
-               r'/usr/local/natinst/nidaqmx/include', r'.']
+    numpy_include = os.path.join(numpy_basedir, r"core/include")
+    inc_dirs = [numpy_include]
     lib_dirs = [r'/usr/local/lib', r'.']
-    libs = ['m'] # worked on opensuse 11
+    libs = ['m']
+
+    unixshared =  Extension("sharedmem.sharedmemory_sysv",
+                            ["sharedmem/sharedmemory_sysv.pyx"],
+                           include_dirs=inc_dirs,
+                           library_dirs=lib_dirs,
+                           libraries=libs)
+    ext_modules = [unixshared]
+
+
+
+
 elif sys.platform == 'win32':
-    inc_dirs = [r'e:/Python26/Lib/site-packages/numpy/core/include', r'c:/Python26/Lib/site-packages/numpy/core/include', r'./']
-    lib_dirs = [r'./', r'e:/Programs/NationaInstruments/NI-DAQ/DAQmx ANSI C Dev/lib/msvc', r'c:/Programs/NationaInstruments/NI-DAQ/DAQmx ANSI C Dev/lib/msvc']
-    libs = [] # worked for MSVC 9, maybe mingw too
-    # libs = ['nicaiu'] # worked for mingw
+    numpy_include = os.path.join(numpy_basedir, r"core\include")
+    inc_dirs = [numpy_include, r'./']
+    lib_dirs = [r'.']
+    libs = [] 
 
 
-# on daq1 rig/winxp
-#inc_dirs = [r'e:/Python26/Lib/site-packages/numpy/core/include', r'./']
-#lib_dirs = [r'./', r'e:/Programs/NationaInstruments/NI-DAQ/DAQmx ANSI C Dev/lib/msvc']
-
-winshared =  Extension("sharedmemory_win", ["sharedmemory_win.pyx", "ntqueryobject.c"],
-                            include_dirs=inc_dirs,
-                            library_dirs=lib_dirs,
-                            libraries=libs)
+    winshared =  Extension("sharedmem.sharedmemory_win", ["sharedmem/sharedmemory_win.pyx", "sharedmem/ntqueryobject.c"],
+                           include_dirs=inc_dirs,
+                           library_dirs=lib_dirs,
+                           libraries=libs)
 
 
 
-ext_modules = [winshared]
+    ext_modules = [winshared]
+
 
 setup(
     author="Sturla Molden",
@@ -46,8 +54,10 @@ setup(
         "Intended Audience :: Scientific programmers",
         "License :: scipy",
         "Operating System :: unix, windows"],
-    packages=["sharedmem"],
-    pakcage_dir= {"sharedmem" : ""},
+    # packages=["sharedmem"],
+    # package_dir= {"sharedmem" : ""},
+    zip_safe=False,
+    
     cmdclass = {'build_ext': build_ext},
     ext_modules = ext_modules,
 
