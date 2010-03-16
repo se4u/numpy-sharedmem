@@ -1,8 +1,17 @@
 ---------------
 numpy-sharedmem
 ---------------
+A collection of shared memory modules for numpy.
 
-A shared memory module for numpy by Sturla Molden and G. Varoquaux, adapted from Robert Kern. Code found posted on scipy list at http://folk.uio.no/sturlamo/python/sharedmem-feb13-2009.zip  See also Sturla's tutorial: 
+  1. sharedmem: A shared memory module for numpy by Sturla Molden and
+  G. Varoquaux, adapted from Robert Kern. Uses "sysv" style shared
+  memory.  Code found posted on scipy list at
+  http://folk.uio.no/sturlamo/python/sharedmem-feb13-2009.zip See also
+  Sturla's tutorial:
+
+  2. shmarray.py : an elegant piece of code from David Baddeley
+  distributed under the BSD license. Uses multiprocessing to allocate
+  shared memory.  Underlying allocator is mmap
 
 Packaging by Chris Lee-Messer
 License: scipy license (2009)
@@ -30,8 +39,7 @@ too big arrays. I've only done basic tests on winxp so far using
 ming32 (Pythonxy 2.6 distribution) numpy 1.3 and cython 12.1
 
 The tests require multiprocessing, which is available for python 2.5
-and is part of the standard library in python 2.6 and above.
-They can be run the tests automatically if you use the nose test framework.  
+and is part of the standard library in python 2.6 and above.  They are written for the nose test framework.
 
 
 
