@@ -131,7 +131,7 @@ def test_two_subprocesses_with_pickle():
     print a
 
 
-def test_alloc_limit():
+def determine_alloc_limit():
         
     def alloc_n(n):
         shape = (2**n,)
