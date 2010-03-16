@@ -29,7 +29,10 @@ It's suppose to work on unix and windows, at least in 32bit for not
 too big arrays. I've only done basic tests on winxp so far using
 ming32 (Pythonxy 2.6 distribution) numpy 1.3 and cython 12.1
 
-The tests require multiprocessing, which is available for python 2.5 and is part of the standard library in python 2.6 and above
+The tests require multiprocessing, which is available for python 2.5
+and is part of the standard library in python 2.6 and above.
+They can be run the tests automatically if you use the nose test framework.  
+
 
 
 Installation:

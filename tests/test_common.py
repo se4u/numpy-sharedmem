@@ -5,7 +5,9 @@
 #       make_test_assertions()
 #    finally:
 #       cleanup_after_test()
-import sharedmem, os
+
+from __future__ import with_statement
+import sharedmem, os, time
 import numpy as np
 numtypes = [np.float64, np.int32, np.float32, np.uint8, np.complex]
 
@@ -57,40 +59,42 @@ def test_two_subprocesses_no_pickle():
 
     def modify_array(a,lck):
         # a = pickle.loads(a)
-        lck.acquire()
-        a[0] = 1
-        a[1] = 2
-        a[2] = 3
-        lck.release()
+        with lck: #lck.acquire()
+        
+            a[0] = 1
+            a[1] = 2
+            a[2] = 3
+            # lck.release()
         print os.getpid(), "modified array"
         
     p = multiprocessing.Process(target=modify_array, args=(a,lck))
     p.start()
 
+    # poll for the result super inefficent!
+    t0 = time.time()
+    t1 = t0+10
     nn = 0
     while True:
         if a[0]:
-            lck.acquire()
-            t = (a == np.array([1,2,3,0], dtype='float64'))
-            lck.release()
+            with lck: #             lck.acquire()
+                t = (a == np.array([1,2,3,0], dtype='float64'))
+                # lck.release()
             break
-        if nn > 10000: # use timeout instead
+        
+        if time.time() > t1 : # use timeout instead
             break
         nn += 1
-        
+    # this will raise an exception if timeout    
     print os.getpid(), t
     assert t.all()
     print "finished (from %s)" % os.getpid()
     
     p.join()
-    
     print a
-
-    return
 
 
 def test_two_subprocesses_with_pickle():
-    #setup
+
     shape = (4,)
     a = sharedmem.zeros(shape, dtype='float64')
     a = sharedmem.zeros(shape)
@@ -101,27 +105,29 @@ def test_two_subprocesses_with_pickle():
 
     def modify_array(pa,lck):
         a = pickle.loads(pa)
-        lck.acquire()
-        a[0] = 1
-        a[1] = 2
-        a[2] = 3
-        lck.release()
+        with lck:
+            a[0] = 1
+            a[1] = 2
+            a[2] = 3
+
         print os.getpid(), "modified array"
         
     p = multiprocessing.Process(target=modify_array, args=(pa,lck))
     p.start()
+
+    t0 = time.time()
+    t1 = t0+10
     nn = 0
     while True:
         if a[0]:
-            lck.acquire()
-            t = (a == np.array([1,2,3,0], dtype='float64'))
-            lck.release()
+            with lck:
+                t = (a == np.array([1,2,3,0], dtype='float64'))
             break
-        if nn > 10000: # use timeout instead
+        if time.time() > t1 : # use timeout instead
             break
-     
         nn += 1
-    print os.getpid(), t
+        
+    print os.getpid(), t, "nn:", nn
     assert t.all()
     print "finished (from %s)" % os.getpid()
     
