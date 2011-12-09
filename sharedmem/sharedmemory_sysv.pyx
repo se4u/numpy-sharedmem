@@ -123,7 +123,7 @@ cdef class SharedMemoryBuffer:
     cdef unsigned long size
 
         
-    def __init__(SharedMemoryBuffer self, unsigned int buf_size,
+    def __init__(SharedMemoryBuffer self, size_t buf_size,
                         name=None, unpickling=False):
         cdef void* mapped_address
         cdef long mode
