@@ -108,10 +108,11 @@ def create(shape, dtype='d'):
     return sa
 
 def zeros(shape, dtype='d'):
-    '''Create an shared array initialised to zeros. Avoid object arrays, as these
+    """Create an shared array initialised to zeros. Avoid object arrays, as these
     will almost certainly break as the objects themselves won't be stored in shared
-    memory, only the pointers'''
-    sa = create(shape, dtype='d')
+    memory, only the pointers"""
+
+    sa = create(shape, dtype=dtype)
 
     #contrary to the documentation, sharedctypes.RawArray does NOT always return
     #an array which is initialised to zero - do it ourselves
@@ -123,7 +124,7 @@ def ones(shape, dtype='d'):
     '''Create an shared array initialised to ones. Avoid object arrays, as these
     will almost certainly break as the objects themselves won't be stored in shared
     memory, only the pointers'''
-    sa = create(shape, dtype='d')
+    sa = create(shape, dtype=dtype)
 
     sa[:] = numpy.ones(1, dtype)
     return sa
