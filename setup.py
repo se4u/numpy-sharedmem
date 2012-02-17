@@ -32,7 +32,7 @@ if sys.platform == 'win32':
 
     ext_modules = [winshared]
 
-else: #if sys.platform == 'linux2' # or 'darwin'
+else: #if sys.platform == 'linux2' 'linux3' or 'darwin'
     numpy_include = os.path.join(numpy_basedir, r"core/include")
     inc_dirs = [numpy_include]
     lib_dirs = [r'/usr/local/lib', r'.']
@@ -62,6 +62,6 @@ setup(
 #    zip_safe=False, # because of ext module
     cmdclass = {'build_ext': build_ext},
     ext_modules = ext_modules,
-
+    py_modules=['shmarray'],
 )
 
