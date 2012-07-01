@@ -45,7 +45,7 @@ def test_MiB_shared_zeros():
 
 
         
-import multiprocessing, os, pickle
+import multiprocessing, pickle
 
 def test_two_subprocesses_no_pickle():
     #setup
