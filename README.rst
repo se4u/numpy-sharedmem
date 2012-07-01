@@ -39,6 +39,19 @@ I'm working on a table of the features of these different packages.
 +--------------------------------+----------+---------+
 |pickle handle to shared array   |   yes    |   no    |
 +--------------------------------+----------+---------+
+| tested on 32-bit linux         |          |         |
++--------------------------------+----------+---------+
+| tested on 64-bit linux         |   yes    |   yes   |
++--------------------------------+----------+---------+
+| tested on 32-bit windows XP    |          |         |
++--------------------------------+----------+---------+
+| tested on 64-bit windows 7     |          |         |
++--------------------------------+----------+---------+
+| tested on 64-bit MacOS 10.x    |          |         |
++--------------------------------+----------+---------+
+| tested on 32-bit MacOS 10.x    |          |         |
++--------------------------------+----------+---------+
+
 
 
 see test_sharedmem_common.py to see how to pickle the shared array and send it to another process
