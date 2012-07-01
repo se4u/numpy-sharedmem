@@ -12,6 +12,7 @@ import numpy as np
 numtypes = [np.float64, np.int32, np.float32, np.uint8, np.complex]
 
 def test_shared_ones():
+    """test sharedmem.ones across common small single axis  types"""
     for typestr in numtypes:
         shape = (10,)
         a = sharedmem.ones(shape,dtype=typestr)
@@ -52,7 +53,7 @@ def test_two_subprocesses_no_pickle():
     shape = (4,)
     a = sharedmem.zeros(shape, dtype='float64')
     a = sharedmem.zeros(shape)
-    print os.getpid(),":", a
+    print "pid ", os.getpid(),":", a
 
 
     lck = multiprocessing.Lock()
@@ -65,7 +66,7 @@ def test_two_subprocesses_no_pickle():
             a[1] = 2
             a[2] = 3
             # lck.release()
-        print os.getpid(), "modified array"
+        print "pid ", os.getpid(), "modified array"
         
     p = multiprocessing.Process(target=modify_array, args=(a,lck))
     p.start()
@@ -85,7 +86,7 @@ def test_two_subprocesses_no_pickle():
             break
         nn += 1
     # this will raise an exception if timeout    
-    print os.getpid(), t
+    print "pid ", os.getpid(), t
     assert t.all()
     print "finished (from %s)" % os.getpid()
     
@@ -98,7 +99,7 @@ def test_two_subprocesses_with_pickle():
     shape = (4,)
     a = sharedmem.zeros(shape, dtype='float64')
     a = sharedmem.zeros(shape)
-    print os.getpid(),":", a
+    print "pid ", os.getpid(),":", a
     pa = pickle.dumps(a)
 
     lck = multiprocessing.Lock()
@@ -110,7 +111,7 @@ def test_two_subprocesses_with_pickle():
             a[1] = 2
             a[2] = 3
 
-        print os.getpid(), "modified array"
+        print "pid ", os.getpid(), "modified array"
         
     p = multiprocessing.Process(target=modify_array, args=(pa,lck))
     p.start()
@@ -127,7 +128,7 @@ def test_two_subprocesses_with_pickle():
             break
         nn += 1
         
-    print os.getpid(), t, "nn:", nn
+    print "pid ", os.getpid(), t, "nn:", nn
     assert t.all()
     print "finished (from %s)" % os.getpid()
     

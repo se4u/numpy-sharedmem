@@ -1,7 +1,7 @@
 from __future__ import with_statement
 import os, time
 import numpy as np
-import shmarray as sharedmem
+import shmarray as sharedmem # use to make it easy to copy sharedmem tests over to shmarray tests
 
 
 numtypes = [np.float64, np.int32, np.float32, np.uint8, np.complex]
@@ -15,7 +15,6 @@ def test_shared_ones():
 
 
 def test_shared_zeros():
-    """test sharedmem.zeros for small single axis types"""
     for typestr in numtypes:
         shape = (10,)
         a = sharedmem.zeros(shape,dtype=typestr)
@@ -23,7 +22,6 @@ def test_shared_zeros():
         assert t.all()
 
 def test_KiB_shared_zeros():
-    """test sharedmem.zeros for arrays on the order of 2**16, single axis types"""
     for typestr in numtypes:
         shape = (2**16,)
         a = sharedmem.zeros(shape,dtype=typestr)
@@ -31,8 +29,6 @@ def test_KiB_shared_zeros():
         assert t.all()
 
 def test_MiB_shared_zeros():
-    """test sharedmem.zeros for arrays on the order 2**21 bytyes, single axis uint8"""
-    
     shape = (2**21,)
     a = sharedmem.zeros(shape,dtype='uint8')
     t = (a == np.zeros(shape))

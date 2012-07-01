@@ -24,9 +24,34 @@ content as of March 2010.
 
 Features/Documentation
 ----------------------
-see test.py to see how to pickle the shared array and send it to another process
+These packages allow you to share numpy arrays
+
+
+=======                           =========   ========
+feature                           sharedmem   shmarray
+-------                           ---------   --------
+share array related processes         +           +
+share arrrya unrelated processes      +           ?
+pickle handle to shared array         +           -
+================================  =========   ========
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+see test_sharedmem_common.py to see how to pickle the shared array and send it to another process
 See also http://folk.uio.no/sturlamo/python/multiprocessing-tutorial.pdf
-which shows examples of using ctypes and multiprocessing to create shared memory.
+which shows examples of using ctypes and multiprocessing to create shared memory. 
+[Note, I have placed a local copy of his tutorial in the doc/ directory of the repository]
 
 I also have a copy of a C-types based code from Nadav Horesh adapted from other code in docs to look at.
 
@@ -59,6 +84,8 @@ To do
  - test under linux
    [x] basic smoke tests done on 32bit linux (ubuntu 8.04)
 
+ - []  setup way to automate tests under linux 32 bit, 64 bit, windows xp 32bit, ?MacOS
+   
  - test larger files: Nadav Horesh mentions that it doesn't work on
    "large" memory regions (but still under 1GB)
 
@@ -70,7 +97,7 @@ To do
  - add doc on how to find allocated shared memory seg under linux and
    makesure they aren't leaking. e.g. ipcrm 
    
- - contact Sturla to see if he is working on this
+ - contact Sturla to see if he is working on this 
 
 
 
@@ -120,5 +147,21 @@ Long discussion thread on scipy-user::
   http://old.nabble.com/Multiprocessing-and-shared-memory-td25949044.html
 
 
+recent tests
+------------
+nosetests -v  (on 64-bit linux, 2012-07-01)
+test_sharedmem_bigarray test allocation of array 2**26 * np.uint64 size ... ok
+test sharedmem.ones across common small single axis  types ... ok
+test sharedmem.zeros for small single axis types ... ok
+test sharedmem.zeros for arrays on the order of 2**16, single axis types ... ok
+test sharedmem.zeros for arrays on the order 2**21 bytyes, single axis uint8 ... ok
+test_sharedmem_common.test_two_subprocesses_no_pickle ... ok
+test_sharedmem_common.test_two_subprocesses_with_pickle ... ok
+test_shmarray.test_shared_ones ... ok
+test_shmarray.test_shared_zeros ... ok
+test_shmarray.test_KiB_shared_zeros ... ok
+test_shmarray.test_MiB_shared_zeros ... ok
+test_shmarray.test_two_subprocesses_no_pickle ... ok
+test_shmarray.test_two_subprocesses_with_pickle ... ERROR
 
 
