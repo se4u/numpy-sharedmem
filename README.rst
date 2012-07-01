@@ -10,11 +10,11 @@ arrays with similar interfaces.
   G. Varoquaux, adapted from Robert Kern. Uses "sysv" style shared
   memory.  Code found posted on scipy list at
   http://folk.uio.no/sturlamo/python/sharedmem-feb13-2009.zip See also
-  Sturla's tutorial:
+  Sturla's tutorial.
 
   2. shmarray.py : an elegant piece of code from David Baddeley
   distributed under the BSD license. Uses multiprocessing to allocate
-  shared memory.  Underlying allocator is mmap
+  shared memory.  Underlying allocator is mmap. Does not allow pickling and passing shared array handles through pipes.
 
 Packaging by Chris Lee-Messer
 License: scipy license (2009)
