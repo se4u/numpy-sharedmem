@@ -27,7 +27,7 @@ content as of March 2010.
 
 Features/Documentation
 ----------------------
-These packages allow you to share numpy arrays
+I'm working on a table of the features of these different packages.
 
 
 +--------------------------------+----------+---------+
