@@ -1,7 +1,10 @@
 ---------------
 numpy-sharedmem
 ---------------
-A collection of shared memory modules for numpy.
+A collection of shared memory modules for numpy packaged together for organization and comparison purposes.
+
+This package contains two different implementations of shared memory for numpy
+arrays with similar interfaces.
 
   1. sharedmem: A shared memory module for numpy by Sturla Molden and
   G. Varoquaux, adapted from Robert Kern. Uses "sysv" style shared
@@ -27,25 +30,15 @@ Features/Documentation
 These packages allow you to share numpy arrays
 
 
-=======                           =========   ========
-feature                           sharedmem   shmarray
--------                           ---------   --------
-share array related processes         +           +
-share arrrya unrelated processes      +           ?
-pickle handle to shared array         +           -
-================================  =========   ========
-
-
-
-
-
-
-
-
-
-
-
-
++--------------------------------+----------+---------+
+|feature                         | sharedmem| shmarray|
++================================+==========+=========+
+|share array related processes   |   yes    |   yes   |
++--------------------------------+----------+---------+
+|share array unrelated processes |   yes    |    ?    |
++--------------------------------+----------+---------+
+|pickle handle to shared array   |   yes    |   no    |
++--------------------------------+----------+---------+
 
 
 see test_sharedmem_common.py to see how to pickle the shared array and send it to another process
@@ -59,9 +52,13 @@ I also have a copy of a C-types based code from Nadav Horesh adapted from other 
 Requirements:
 -------------
 
-It's suppose to work on unix and windows, at least in 32bit for not
+The original versions are suppose to work on unix and windows, at least in 32bit for not
 too big arrays. I've only done basic tests on winxp so far using
-ming32 (Pythonxy 2.6 distribution) numpy 1.3 and cython 12.1
+mingw32 (Pythonxy 2.6 distribution) numpy 1.3 and cython 12.1
+
+I'm now using 64-bit linux so I've made edits to Sturla's and Gael code to allow
+use on 64-bit. It needs to be tested back on 32-bit to make sure I haven't broken
+things.
 
 The tests require multiprocessing, which is available for python 2.5
 and is part of the standard library in python 2.6 and above.  They are written for the nose test framework.
@@ -71,11 +68,12 @@ and is part of the standard library in python 2.6 and above.  They are written f
 Installation:
 -------------
 on windows, need to use mingw and assuming you are using mercurial. 
+
 Using the command line::
-  $ hg clone https://cleemesser@bitbucket.org/cleemesser/numpy-sharedmem/
-  $ cd numpy-sharedmem
-  $ copy setup.cfg.template to setup.cfg  # to set mingw as the compiler
-  $ python setup.py install
+    $ hg clone https://cleemesser@bitbucket.org/cleemesser/numpy-sharedmem/
+    $ cd numpy-sharedmem
+    $ copy setup.cfg.template to setup.cfg  # to set mingw as the compiler
+    $ python setup.py install
 
 I have also started putting binary distributions in the dist/ directory in case I don't have a compiler handy.
 
@@ -108,7 +106,7 @@ The python wiki on this http://wiki.python.org/moin/ParallelProcessing
 
 References and issues:
 ----------------------
-The oringal comment::
+The original comment::
     http://old.nabble.com/Re:-Multiprocessing-and-shared-memory-p25949201.html
 
     Ga�l Varoquaux and I did some work on that some months ago. It's not as 
@@ -140,28 +138,30 @@ Nadav comments::
 
   Extended module that I used for some useful work.
   Comments:
-    1. Sturla's module is better designed, but did not work with very large (although sub GB) arrays
-    2. Tested on 64 bit linux (amd64) + python-2.6.4 + numpy-1.4.0
+  
+      1. Sturla's module is better designed, but did not work with very large (although sub GB) arrays
+      2. Tested on 64 bit linux (amd64) + python-2.6.4 + numpy-1.4.0
 
 Long discussion thread on scipy-user::
   http://old.nabble.com/Multiprocessing-and-shared-memory-td25949044.html
 
 
-recent tests
-------------
-nosetests -v  (on 64-bit linux, 2012-07-01)
-test_sharedmem_bigarray test allocation of array 2**26 * np.uint64 size ... ok
-test sharedmem.ones across common small single axis  types ... ok
-test sharedmem.zeros for small single axis types ... ok
-test sharedmem.zeros for arrays on the order of 2**16, single axis types ... ok
-test sharedmem.zeros for arrays on the order 2**21 bytyes, single axis uint8 ... ok
-test_sharedmem_common.test_two_subprocesses_no_pickle ... ok
-test_sharedmem_common.test_two_subprocesses_with_pickle ... ok
-test_shmarray.test_shared_ones ... ok
-test_shmarray.test_shared_zeros ... ok
-test_shmarray.test_KiB_shared_zeros ... ok
-test_shmarray.test_MiB_shared_zeros ... ok
-test_shmarray.test_two_subprocesses_no_pickle ... ok
-test_shmarray.test_two_subprocesses_with_pickle ... ERROR
+recent tests results
+--------------------
+nosetests -v  (on 64-bit linux, 2012-07-01)::
+
+    test_sharedmem_bigarray test allocation of array 2**26 * np.uint64 size ... ok
+    test sharedmem.ones across common small single axis  types ... ok
+    test sharedmem.zeros for small single axis types ... ok
+    test sharedmem.zeros for arrays on the order of 2**16, single axis types ... ok
+    test sharedmem.zeros for arrays on the order 2**21 bytyes, single axis uint8 ... ok
+    test_sharedmem_common.test_two_subprocesses_no_pickle ... ok
+    test_sharedmem_common.test_two_subprocesses_with_pickle ... ok
+    test_shmarray.test_shared_ones ... ok
+    test_shmarray.test_shared_zeros ... ok
+    test_shmarray.test_KiB_shared_zeros ... ok
+    test_shmarray.test_MiB_shared_zeros ... ok
+    test_shmarray.test_two_subprocesses_no_pickle ... ok
+    test_shmarray.test_two_subprocesses_with_pickle ... ERROR
 
 
