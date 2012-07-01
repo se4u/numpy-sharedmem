@@ -83,6 +83,7 @@ Installation:
 on windows, need to use mingw and assuming you are using mercurial. 
 
 Using the command line::
+
     $ hg clone https://cleemesser@bitbucket.org/cleemesser/numpy-sharedmem/
     $ cd numpy-sharedmem
     $ copy setup.cfg.template to setup.cfg  # to set mingw as the compiler
