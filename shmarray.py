@@ -82,28 +82,34 @@ class shmarray(numpy.ndarray):
         return __reduce_ex__(self, 0)
 
 
-def create(shape, dtype='d'):
+def create(shape, dtype='d', alignment = 32):
     '''Create an uninitialised shared array. Avoid object arrays, as these
     will almost certainly break as the objects themselves won't be stored in shared
     memory, only the pointers'''
     shape = numpy.atleast_1d(shape).astype('i')
-
-    #we're going to use a flat ctypes array
-    N = numpy.prod(shape)
-
     dtype = numpy.dtype(dtype)
 
-    #if the dtype's relatively simple create the corresponding ctypes array
-    #otherwise create a suitably sized byte array
-    dt = dtype.char
+    #we're going to use a flat ctypes array
+    N = numpy.prod(shape) + alignment
+    # The upper bound of size we want to allocate to be certain
+    #  that we can take an aligned array of the right size from it.
+    N_bytes_big = N * dtype.itemsize
+    # The final (= right) size of the array
+    N_bytes_right = numpy.prod(shape) * dtype.itemsize
 
-    if not dt in sharedctypes.typecode_to_type.keys():
-        dt = 'b'
-        N *= dtype.itemsize
+    dt = 'b'
 
-    a = sharedctypes.RawArray(dt, N)
+    # We create the big array first
+    a = sharedctypes.RawArray(dt, N_bytes_big)
 
-    sa =  shmarray(a, shape, dtype)
+    sa =  shmarray(a, (N_bytes_big,), dt)
+
+    # We pick the first index of the new array that is aligned
+    # If the address of the first element is 1 and we want 8-alignment, the 
+    #  first aligned index of the array is going to be 7 == -1 % 8
+    start_index = -sa.ctypes.data % alignment
+    # Finally, we take the (aligned) subarray and reshape it.
+    sa = sa[start_index:start_index + N_bytes_right].view(dtype).reshape(shape)
 
     return sa
 
