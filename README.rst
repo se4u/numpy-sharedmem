@@ -1,4 +1,4 @@
----------------
+﻿---------------
 numpy-sharedmem
 ---------------
 A collection of shared memory modules for numpy packaged together for organization and comparison purposes.
@@ -24,6 +24,13 @@ url:  http://cleemesser@bitbucket.org/cleemesser/numpy-sharedmem/
 You might want to check Sturla's sourceforge project
 http://sharedmemoryarr.sourceforge.net/ thought it didn't have any
 content as of March 2010.
+
+IMPORTANT
+=========
+This is not a maintained package; it is meant as a collection for studying how
+ to use shared memory in numpy at least circa 2008-2012.
+
+
 
 Features/Documentation
 ----------------------
