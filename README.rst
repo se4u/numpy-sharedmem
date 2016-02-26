@@ -27,8 +27,8 @@ content as of March 2010.
 
 IMPORTANT
 =========
-This is not a maintained package; it is meant as a collection for studying how
- to use shared memory in numpy at least circa 2008-2012.
+This is not a maintained package; it is kept as a collection for studying how 
+to use shared memory in numpy circa 2008-2012.
 
 
 
